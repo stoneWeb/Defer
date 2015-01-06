@@ -70,9 +70,9 @@ var promise = Defer.resolve('ok');
 #### all(promises)
 多个promise对象包成一个promise对象
 ```js
-Defer.all(promise1(), promise2()).then(function(promise1arg, promise2arg){
-        console.log(arguments);
-    }, function(){
-        console.log(arguments);
+Defer.all([promise1(), promise2()]).then(function(data){
+        console.log(data); // [data1, data2]
+    }, function(err){
+        console.log(err);
     })
 ```
