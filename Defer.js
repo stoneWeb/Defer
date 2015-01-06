@@ -357,7 +357,14 @@
          */
         promise: function(fn){
             var defer = new Defer;
-            fn(defer);
+            fn(
+                function(data){
+                    return defer.resolve(data)
+                },
+                function(reason){
+                    return defer.reject(reason)
+                }
+            );
             return defer.promise;
         },
 
@@ -369,8 +376,8 @@
          * @return promise
          */
         resolve: function(data){
-            return this.promise(function(resolver){
-                resolver.resolve(data)
+            return this.promise(function(resolve, reject){
+                resolve(data)
             });
         },
 
@@ -382,8 +389,8 @@
          * @return promise
          */
         reject: function(reason){
-            return this.promise(function(resolver){
-                resolver.reject(reason)
+            return this.promise(function(resolve, reject){
+                reject(reason)
             });
         },
 
